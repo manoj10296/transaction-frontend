@@ -1,9 +1,36 @@
 import React from 'react'
 import moment from 'moment'
+import styled, { css } from 'styled-components'
 import { getTransactions } from '../../apicalls/index'
-const data = [
-  { date: '12/12/2019', description: 'hello', credit: 122, debit: 122, runningBalance: 12 }
-]
+// const data = [
+//   { date: '12/12/2019', description: 'hello', credit: 122, debit: 122, runningBalance: 12 }
+// ]
+
+ const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    text-align: center;
+    border: 1px solid lightgray;
+    :nth-child(2) {
+    text-align: left;
+    }
+    
+ `
+  const THead = styled.thead`
+  border: 0;
+  padding: 10px;
+  cursor: default;
+  `
+  const Headtr = styled.tr`
+  height: 40px;
+  ${(props) => props.customColor && css `
+    background: lightblue;
+    color: white;
+  `}
+`
+
 
 const Home = (props) => {
   console.log(props)
@@ -18,32 +45,36 @@ const Home = (props) => {
   console.log(apiData)
   return (
     <div>
-      <table>
-        <tr>
+      <Table>
+        <THead>
+          <Headtr>
           <th>Office Transactions</th>
           <th></th>
           <th></th>
           <th></th>
           <th onClick={() => props.history.push('/addtransaction')} >+Add Transaction</th>
-        </tr>
-        <tr>
+          </Headtr>
+        </THead>
+        <THead>
+          <Headtr>
           <th></th>
           <th></th>
           <th></th>
           <th></th>
           <th></th>
-        </tr>
-        <tr>
+          </Headtr>
+        </THead>
+        <Headtr customColor>
           <th>Date</th>
           <th>Description</th>
           <th>Credit</th>
           <th>Debit</th>
           <th>Running Balance</th>
-        </tr>
+        </Headtr>
         <tbody>
           {
             apiData.length > 0 && apiData.map(d => (
-              <tr>
+              <Headtr>
                 <td>
                   {moment(d.createdAt).format('MM/DD/YYYY')}
                 </td>
@@ -57,13 +88,13 @@ const Home = (props) => {
                   {d.type === 'debit' ? d.amount : null}
                 </td>
                 <td>
-                  -
+                  {d.runningBalance}
                </td>
-              </tr>
+              </Headtr>
             ))
           }
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }

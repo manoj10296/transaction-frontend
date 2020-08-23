@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import AddTransaction from './components/AddTransaction';
 
 const MainDiv= styled.div`
-  heigth: 100%;
+  height: 100%;
   width: 100%;
 `
 
